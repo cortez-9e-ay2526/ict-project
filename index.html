@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="https://pyscript.net/releases/2024.1.1/core.css">
+    <script type="module" src="https://pyscript.net/releases/2024.1.1/core.js"></script>
+
+    <title>Readers Cove</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 40px;
+            background-color: #dfe9df;
+            font-family: Arial, sans-serif;
+            color: #344834;
+        }
+
+        .browser {
+            max-width: 1100px;
+            margin: auto;
+            background-color: #f7faf5;
+            border: 5px solid #7d9b7d;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .browser-bar {
+            background-color: #7d9b7d;
+            padding: 12px;
+        }
+
+        .browser-dot {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background-color: #edf3e9;
+            border-radius: 50%;
+            margin-right: 6px;
+        }
+
+        .website {
+            padding: 30px;
+        }
+
+        .website h1 {
+            color: #536f53;
+        }
+
+        .books {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .book-card {
+            width: 220px;
+            padding: 20px;
+            background-color: #e8f0e5;
+            border: 3px solid #91aa91;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .book-card img {
+            width: 160px;
+            height: 230px;
+            object-fit: cover;
+            border-radius: 6px;
+            display: block;
+            margin: auto;
+        }
+
+        .book-card h2 {
+            color: #536f53;
+        }
+
+        .cart {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f0e5;
+            border: 2px solid #91aa91;
+            border-radius: 12px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #718d71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #5f7b5f;
+        }
+
+        input, select {
+            padding: 8px;
+            margin: 5px;
+            border: 1px solid #91aa91;
+            border-radius: 5px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #718d71;
+        }
+
+        .output-box {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f7faf5;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="browser">
+
+        <div class="browser-bar">
+            <span class="browser-dot"></span>
+            <span class="browser-dot"></span>
+            <span class="browser-dot"></span>
+        </div>
+
+        <div class="website">
+
+            <h1>Readers Cove</h1>
+
+            <div id="out_name" style="background-color: #7d9b7d; color: white; font-size: 30px;"></div>
+            <div id="out_age" style="background-color: #7d9b7d; color: white; font-size: 30px;"></div>
+            <div id="out_height" style="background-color: #7d9b7d; color: white; font-size: 30px;"></div>
+            <div id="out_countries" style="background-color: #7d9b7d; color: white; font-size: 30px;"></div>
+            <div id="out_student" style="background-color: #7d9b7d; color: white; font-size: 30px;"></div>
+            <div id="out_fruits" style="background-color: #7d9b7d; color: white; font-size: 30px;"></div>
+            <div id="out_days" style="background-color: #7d9b7d; color: white; font-size: 30px;"></div>
+
+            <h2>Our Books</h2>
+
+            <div class="books">
+
+                <div class="book-card">
+                    <img src="images/beautyandbeast.jpeg" alt="Beauty and the Beast book cover">
+                    <h2>Beauty and the Beast</h2>
+                    <p>Ursula Jones</p>
+                    <p>₱150</p>
+
+                    <label>
+                        <input type="checkbox" id="Beauty" value="150">
+                        Add to Cart
+                    </label>
+                </div>
+
+                <div class="book-card">
+                    <img src="images/hetaliacover.jpeg" alt="HETALIA book cover">
+                    <h2>HETALIA</h2>
+                    <p>Hidekaz Himaruya</p>
+                    <p>₱500</p>
+
+                    <label>
+                        <input type="checkbox" id="Hetalia" value="500">
+                        Add to Cart
+                    </label>
+                </div>
+
+                <div class="book-card">
+                    <img src="images/nolongerhuman.jpg" alt="No Longer Human book cover">
+                    <h2>No Longer Human</h2>
+                    <p>Osamu Dazai</p>
+                    <p>₱250</p>
+
+                    <label>
+                        <input type="checkbox" id="NoLongerHuman" value="250">
+                        Add to Cart
+                    </label>
+                </div>
+
+            </div>
+
+            <div class="cart">
+                <h2>Shopping Cart</h2>
+
+                <button py-click="create_order">
+                    Calculate Total
+                </button>
+
+                <div id="output1" class="output-box"></div>
+            </div>
+
+            <div class="cart">
+                <h2>SKU Generator</h2>
+
+                <select id="category">
+                    <option value="MNG">Manga</option>
+                    <option value="FIC">Fiction</option>
+                    <option value="FT">Fairy Tale</option>
+                </select>
+
+                <input type="text" id="product" placeholder="Product name">
+
+                <input type="number" id="quantity" placeholder="Quantity">
+
+                <button py-click="generate_sku">
+                    Generate SKU
+                </button>
+
+                <div id="output2" class="output-box"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <py-script src="main.py"></py-script>
+
+</body>
+</html>
